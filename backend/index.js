@@ -7,7 +7,7 @@ const userRoutes = require("./routes/user");
 //express app
 const app = express();
 const port = process.env.PORT || 4000;
-
+const MONGO_URI =process.env.MONGO_URI
 // middleware
 app.use(express.json());
 
@@ -30,7 +30,7 @@ app.use("/api/workouts", workoutRoutes);
 app.use("/api/user", userRoutes);
 // connect to db
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(MONGO_URI)
   .then(() => {
     // listen for request
     app.listen(port, () => {
@@ -38,5 +38,5 @@ mongoose
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.error("Database connection error:", error);
   });
